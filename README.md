@@ -28,3 +28,4 @@ A simple, interactive travel destinations showcase featuring an accordion-style 
 3. Click on destination headers to expand/collapse content
 4. Click on images to view them in the lightbox viewer
 5. Click the × button or outside the image to close the lightbox
+6. git hub link https://github.com/Swikaar25/travel.git
