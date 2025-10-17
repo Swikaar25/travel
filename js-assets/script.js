@@ -1,35 +1,55 @@
-// Accordion
-document.querySelectorAll('.accordion-header').forEach(button => {
-    button.addEventListener('click', () => {
-        const content = button.nextElementSibling;
-        // Hide all other panels
-        document.querySelectorAll('.accordion-content').forEach(panel => {
-            if (panel !== content) {
-                panel.style.display = 'none';
-            }
+// Accordion functionality
+const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+accordionHeaders.forEach(header => {
+    header.addEventListener('click', () => {
+        const content = header.nextElementSibling;
+        const isActive = header.classList.contains('active');
+
+        // Close all accordion items
+        accordionHeaders.forEach(h => {
+            h.classList.remove('active');
+            h.nextElementSibling.classList.remove('active');
         });
-        // Toggle current panel
-        content.style.display = content.style.display === 'block' ? 'none' : 'block';
+
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            header.classList.add('active');
+            content.classList.add('active');
+        }
     });
 });
 
-// Lightbox
+// Lightbox functionality
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.querySelector('.lightbox-img');
+const thumbnails = document.querySelectorAll('.thumbnail');
+const closeBtn = document.querySelector('.close');
 
-document.querySelectorAll('.thumbnail').forEach(img => {
-    img.addEventListener('click', () => {
-        lightboxImg.src = img.src;
-        lightbox.style.display = 'block';
+// Open lightbox when clicking on thumbnails
+thumbnails.forEach(thumbnail => {
+    thumbnail.addEventListener('click', () => {
+        lightbox.classList.add('active');
+        lightboxImg.src = thumbnail.src;
+        lightboxImg.alt = thumbnail.alt;
     });
 });
 
-document.querySelector('.close').addEventListener('click', () => {
-    lightbox.style.display = 'none';
+// Close lightbox when clicking the X button
+closeBtn.addEventListener('click', () => {
+    lightbox.classList.remove('active');
 });
 
+// Close lightbox when clicking outside the image
 lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) {
-        lightbox.style.display = 'none';
+        lightbox.classList.remove('active');
+    }
+});
+
+// Close lightbox with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        lightbox.classList.remove('active');
     }
 });
